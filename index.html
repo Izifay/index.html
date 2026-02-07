@@ -22,12 +22,11 @@
     ></div>
 
     <audio id="bgMusic" src="musik.mp3"></audio>
-    
-    <button onclick="document.getElementById('bgMusic').play()">
-      
-      Play Musik
-    </button>
 
+    <button id="musicBtn">
+      
+      ▶ Play
+    </button>
 
     <script src="index.JS"></script>
 
@@ -143,15 +142,15 @@
   </body>
 </html>
 
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const music = document.getElementById("bgMusic");
   const musicBtn = document.getElementById("musicBtn");
-
   let isPlaying = false;
 
   musicBtn.addEventListener("click", () => {
     if (!isPlaying) {
-      music.volume = 0.7; // penting untuk HP
+      music.volume = 0.7;
       music.play()
         .then(() => {
           musicBtn.innerText = "⏸ Pause";
@@ -162,8 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     } else {
       music.pause();
-      musicBtn.innerText = "🎵 Play";
+      musicBtn.innerText = "▶ Play";
       isPlaying = false;
     }
   });
 });
+</script>
