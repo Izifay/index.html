@@ -1,169 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HBD Zaki Dari Fairuz</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HBD Zaki Dari Fairuz</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
-  </head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
 
-  <body
-    class="min-h-screen flex items-center justify-center"
-    style="background-image: url('https://images.unsplash.com/photo-1530273973427-22351773250c?q=80&w=1470'); background-size: cover;"
+<body
+  class="min-h-screen flex flex-col items-center justify-center gap-4"
+  style="background-image: url('https://images.unsplash.com/photo-1530273973427-22351773250c?q=80&w=1470'); background-size: cover;"
+>
+
+  <div
+    id="kartu"
+    class="bg-white border-4 border-gray-300 shadow-lg shadow-blue-300 rounded-xl text-center px-10 py-8 w-80 animate__animated animate__backInDown"
+  ></div>
+
+  <audio id="bgMusic" src="musik.mp3"></audio>
+
+  <button
+    id="musicBtn"
+    class="bg-black/60 text-white px-4 py-2 rounded-full"
   >
-    <div
-      id="kartu"
-      class="bg-white border-4 border-gray-300 shadow-lg shadow-blue-300 rounded-xl text-center px-10 py-8 w-80 animate__animated animate__backInDown"
-    ></div>
+    ▶ Play
+  </button>
 
-    <audio id="bgMusic" src="musik.mp3"></audio>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 
-    <button id="musicBtn">
-      
-      ▶ Play
-    </button>
+  <script>
+    // confetti
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
 
-    <script src="index.JS"></script>
+    const kartu = document.getElementById("kartu");
 
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    let currentPhoto = 0;
 
-    <script>
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
+    const photos = [
+      "https://i.pinimg.com/736x/76/a2/54/76a254dfd5e244f720afd3df11caa657.jpg",
+      "https://i.pinimg.com/736x/2b/95/9d/2b959d5bcfa3fba222b87f4523bdcbc8.jpg",
+      "https://i.pinimg.com/736x/3c/db/56/3cdb5693fea9973d3ad2f4c82f35e8bb.jpg",
+    ];
 
-      const kartu = document.getElementById("kartu");
+    renderSlide1();
 
-      let currentSlide = 1;
-      let currentPhoto = 0;
+    function renderSlide1() {
+      kartu.innerHTML = `
+        <h1 class="text-3xl m-2">Happy Birthday</h1>
+        <h1 class="text-4xl text-blue-500 font-bold animate__animated animate__pulse animate__infinite">
+          Zaki
+        </h1>
 
-      const photos = [
-        "https://i.pinimg.com/736x/76/a2/54/76a254dfd5e244f720afd3df11caa657.jpg",
-        "https://i.pinimg.com/736x/2b/95/9d/2b959d5bcfa3fba222b87f4523bdcbc8.jpg",
-        "https://i.pinimg.com/736x/3c/db/56/3cdb5693fea9973d3ad2f4c82f35e8bb.jpg",
-      ];
+        <button
+          class="p-2 bg-blue-600 text-white mt-5 w-full rounded-xl animate__animated animate__tada"
+          onclick="renderSlideFoto()"
+        >
+          Klik Disini Ya
+        </button>
+      `;
+    }
 
-      renderSlide1();
+    function renderSlideFoto() {
+      kartu.innerHTML = `
+        <h2 class="text-xl font-semibold mb-3">Sorotan 📸</h2>
 
-      function renderSlide1() {
-        kartu.innerHTML = `
-          <h1 class="text-3xl m-2">Happy Birthday</h1>
-          <h1 class="text-4xl text-blue-500 font-bold animate__animated animate__pulse animate__infinite">Zaki</h1>
-            <button
-            class="p-2 bg-blue-600 text-white rounded mt-5 w-full shadow-2xl rounded-2xl backdrop-blur-sm animate__animated animate__tada animate__repeat-2"
-            onclick="renderSlideFoto()"
-            >
-            
-            Klik Disini Ya
-            </button>
+        <img
+          src="${photos[currentPhoto]}"
+          class="rounded mb-3 mx-auto animate__animated animate__fadeIn"
+        />
 
-        `;
-      }
+        <div class="flex justify-between items-center gap-2">
+          <button onclick="prevPhoto()" class="bg-blue-500 text-white px-3 py-1 rounded">◀</button>
+          <span class="text-sm text-blue-500 font-bold">Lihat Sampai Selesai...</span>
+          <button onclick="nextPhoto()" class="bg-blue-500 text-white px-3 py-1 rounded">▶</button>
+        </div>
 
-      function renderSlideFoto() {
-        kartu.innerHTML = `
-          <h2 class="text-xl font-semibold mb-3">Sorotan 📸</h2>
+        <button
+          class="mt-4 p-2 bg-green-600 text-white w-full rounded"
+          onclick="renderSlideUcapan()"
+        >
+          Lanjut
+        </button>
+      `;
+    }
 
-          <img
-            src="${photos[currentPhoto]}"
-            class="rounded mb-3 mx-auto animate__animated animate__fadeIn"
-          />
+    function prevPhoto() {
+      currentPhoto = currentPhoto === 0 ? photos.length - 1 : currentPhoto - 1;
+      renderSlideFoto();
+    }
 
-          <div class="flex justify-between gap-2">
-            <button
-              class="bg-blue-500 text-white px-3 py-1 rounded animate__animated animate__fadeIn hover:bg-blue-900"
-              onclick="prevPhoto()"
-            >
-              ◀
-            </button>
-            
-            <div class="text-sm text-blue-500 font-bold animate__animated animate__fadeIn">
-                Lihat Sampai Selesai...
-            </div>
-             
+    function nextPhoto() {
+      currentPhoto = currentPhoto === photos.length - 1 ? 0 : currentPhoto + 1;
+      renderSlideFoto();
+    }
 
-            <button
-              class="bg-blue-500 text-white px-3 py-1 rounded animate__animated animate__fadeIn hover:bg-blue-900"
-              onclick="nextPhoto()"
-            >
-              ▶
-            </button>
-          </div>
+    function renderSlideUcapan() {
+      kartu.innerHTML = `
+        <h1 class="font-semibold animate__animated animate__zoomIn">
+          Selamat ulang tahun, semoga makin banyak kebahagiaan,
+          hapalan makin lancar, dan semua impian tercapai 🎉🎂
+        </h1>
 
-          <button
-            class="mt-4 p-2 bg-green-600 text-white rounded w-full hover:bg-green-800 animate__animated animate__fadeIn hover:bg-green-900"
-            onclick="renderSlideUcapan()"
-          >
-            Lanjut
-          </button>
-        `;
-      }
+        <h2 class="mt-3 animate__animated animate__fadeIn">
+          - Dari : Fairuz -
+        </h2>
 
-      function prevPhoto() {
-        currentPhoto =
-          currentPhoto === 0 ? photos.length - 1 : currentPhoto - 1;
-        renderSlideFoto();
-      }
+        <button
+          class="p-2 bg-slate-600 text-white mt-5 w-full rounded"
+          onclick="renderSlide1()"
+        >
+          Tutup
+        </button>
+      `;
+    }
 
-      function nextPhoto() {
-        currentPhoto =
-          currentPhoto === photos.length - 1 ? 0 : currentPhoto + 1;
-        renderSlideFoto();
-      }
+    // MUSIK
+    document.addEventListener("DOMContentLoaded", () => {
+      const music = document.getElementById("bgMusic");
+      const musicBtn = document.getElementById("musicBtn");
+      let isPlaying = false;
 
-      function renderSlideUcapan() {
-        kartu.innerHTML = `
-          <h1 class="font-semibold animate__animated animate__zoomIn">
-            Selamat ulang tahun, Ya Semoga tahun ini makin banyak kebahagiaan,
-            Hapalan makin lancar, dan segala impian jadi kenyataan.
-            🎉🎂
-          </h1>
-
-          <h2 class="mt-3 animate__animated animate__fadeIn">
-            - Dari : Fairuz -
-          </h2>
-
-          <button
-            class="p-2 bg-slate-600 text-white rounded mt-5 w-full hover:bg-slate-900"
-            onclick="renderSlide1()"
-          >
-            Tutup
-          </button>
-        `;
-      }
-    </script>
-  </body>
-</html>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const music = document.getElementById("bgMusic");
-  const musicBtn = document.getElementById("musicBtn");
-  let isPlaying = false;
-
-  musicBtn.addEventListener("click", () => {
-    if (!isPlaying) {
-      music.volume = 0.7;
-      music.play()
-        .then(() => {
+      musicBtn.addEventListener("click", () => {
+        if (!isPlaying) {
+          music.volume = 0.7;
+          music.play();
           musicBtn.innerText = "⏸ Pause";
           isPlaying = true;
-        })
-        .catch(() => {
-          alert("Tap tombol Play sekali lagi ya 😊");
-        });
-    } else {
-      music.pause();
-      musicBtn.innerText = "▶ Play";
-      isPlaying = false;
-    }
-  });
-});
-</script>
+        } else {
+          music.pause();
+          musicBtn.innerText = "▶ Play";
+          isPlaying = false;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
